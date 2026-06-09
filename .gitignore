@@ -1,1 +1,16 @@
 .DS_Store
+
+# Slurm job logs (sage-job-<jobid>.out / .err)
+sage-job-*.out
+sage-job-*.err
+slurm-*.out
+
+# Per-job results directories created by the sbatch script
+results-*/
+
+# Pulled/built container images — never commit these (multi-GB)
+*.sif
+
+# Sage runtime litter, in case you ever run outside the container
+*.sage.py
+.sage/
