@@ -13,4 +13,4 @@ print(f"Rank of {E}: {E.rank()}")
 outdir = "/output" if os.path.isdir("/output") else "."
 with open(os.path.join(outdir, "result.txt"), "w") as f:
     f.write(f"rank = {E.rank()}\n")
-print(f"Wrote results to {outdir}/result.txt")
+print(f"Wrote the results to {outdir}/result.txt")
