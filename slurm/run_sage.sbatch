@@ -16,7 +16,7 @@ module load apptainer 2>/dev/null || true
 
 # Where the container image lives. Pin to a commit SHA for reproducible
 # runs, or use :latest to always get the most recent build.
-REPO="ghcr.io/aruethe2/sagecontainer/sage-job"
+REPO="ghcr.io/YOUR_GH_USER/YOUR_REPO/sage-job"
 TAG="${SAGE_IMAGE_TAG:-latest}"
 SIF="$SLURM_SUBMIT_DIR/sage-job-${TAG}.sif"
 

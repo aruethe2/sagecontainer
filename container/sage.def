@@ -20,10 +20,16 @@ From: mambaorg/micromamba:1.5.10
     export SAGE_CODE_DIR=/opt/sage-code
 
 %runscript
-    # Default entrypoint: run main.sage, forwarding any CLI arguments.
-    # Override at runtime if needed:
-    #   apptainer exec sage-job.sif sage /opt/sage-code/other.sage
-    exec sage /opt/sage-code/main.sage "$@"
+    # The SIF is read-only, but Sage preparses .sage files by writing a
+    # temporary .sage.py next to the source. So: copy the code to a
+    # writable temp dir (node-local /tmp or $TMPDIR) and run from there.
+    WORKDIR="$(mktemp -d "${TMPDIR:-/tmp}/sage-job.XXXXXX")"
+    cp -r /opt/sage-code/. "$WORKDIR/"
+    cd "$WORKDIR"
+    sage main.sage "$@"
+    status=$?
+    rm -rf "$WORKDIR"
+    exit $status
 
 %test
     sage --version
