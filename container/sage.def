@@ -1,0 +1,37 @@
+Bootstrap: docker
+From: mambaorg/micromamba:1.5.10
+
+# Lean core-Sage image: installs only the conda-forge `sage` package
+# instead of pulling the multi-GB sagemath/sagemath Docker image.
+
+%files
+    code /opt/sage-code
+
+%post
+    export MAMBA_ROOT_PREFIX=/opt/conda
+    micromamba install -y -n base -c conda-forge \
+        sage=10.4 \
+        && micromamba clean --all --yes
+    chmod -R a+rX /opt/sage-code
+
+%environment
+    export MAMBA_ROOT_PREFIX=/opt/conda
+    export PATH=/opt/conda/bin:$PATH
+    export SAGE_CODE_DIR=/opt/sage-code
+
+%runscript
+    # Default entrypoint: run main.sage, forwarding any CLI arguments.
+    # Override at runtime if needed:
+    #   apptainer exec sage-job.sif sage /opt/sage-code/other.sage
+    exec sage /opt/sage-code/main.sage "$@"
+
+%test
+    sage --version
+
+%labels
+    Description Core SageMath (conda-forge) job container built by GitHub Actions
+
+%help
+    Runs /opt/sage-code/main.sage with core SageMath from conda-forge.
+    Usage on the cluster:
+        apptainer run sage-job.sif [args passed to main.sage]
