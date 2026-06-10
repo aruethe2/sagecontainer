@@ -27,7 +27,7 @@ fi
 
 ## Move files to the scratch location so we can execute the
 ## job. Make certain to replace the placeholder filenames
-## below (data_file_1, my_script) with all files required
+## below (main.sage) with all files required
 ## for your job (wildcards such as * are allowed, and by
 ## default any directories listed will be copied recursively).
 mkdir -p /$SCRATCHDIR/$USER/$SLURM_JOB_NAME-$SLURM_JOB_ID
