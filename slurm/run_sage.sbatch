@@ -11,9 +11,6 @@
 
 set -euo pipefail
 
-# Many clusters ship Apptainer as a module; comment out if it's on PATH.
-module load apptainer 2>/dev/null || true
-
 # Where the container image lives. Pin to a commit SHA for reproducible
 # runs, or use :latest to always get the most recent build.
 REPO="ghcr.io/aruethe2/sagecontainer/sage-job"
